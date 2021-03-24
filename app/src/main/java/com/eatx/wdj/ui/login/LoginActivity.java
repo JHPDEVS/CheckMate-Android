@@ -133,7 +133,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             System.out.println("회원가입 버튼이 클릭됨");
+            loadingProgressBar.setVisibility(View.GONE);
             Intent intent = new Intent(LoginActivity.this, Register.class
+
             );
             startActivity(intent);
             }
