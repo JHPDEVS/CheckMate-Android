@@ -35,6 +35,7 @@ import java.sql.SQLException;
 
 import com.eatx.wdj.R;
 import com.eatx.wdj.ui.Register.Register;
+import com.eatx.wdj.ui.login.ui.main.MainFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 public class LoginActivity extends AppCompatActivity {
@@ -150,11 +151,11 @@ public class LoginActivity extends AppCompatActivity {
             ResultSet rs;
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-
+            Connection connection = null;
             String query = "SELECT * FROM `students` WHERE `id` = ? AND `password` = ?";
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mariadb://eatx.shop:3307/student_db","wdj","wdj123");
+                connection = DriverManager.getConnection("jdbc:mariadb://eatx.shop:3307/student_db","wdj","wdj123");
                 st = connection.prepareStatement(query);
                 st.setString(1,username);
                 st.setString(2,password);
@@ -162,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(rs.next()) {
                     System.out.println("로그인 성공");
-                    Intent intent = new Intent(LoginActivity.this, Register.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
                     System.out.println("아이디나 비밀번호를 확인해주세요");
@@ -172,6 +173,13 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println("로그인 실패");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+            }
+            try {
+                connection.close();  // 연결해제
+                System.out.println("연결해제");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                System.out.println("연결해제 실패");
             }
             return null;
         }
