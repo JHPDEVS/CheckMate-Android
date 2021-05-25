@@ -9,102 +9,317 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".ui.Register.Register">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!--    <data>-->
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        <!--        <import type="android.view.View" />-->
 
-    <EditText
-        android:id="@+id/nickname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="닉네임"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        <!--&lt;!&ndash;        <variable&ndash;&gt;-->
+        <!--&lt;!&ndash;            name="vm"&ndash;&gt;-->
+        <!--&lt;!&ndash;            type="com.mtjin.nomoneytrip.views.phone.PhoneAuthViewModel" />&ndash;&gt;-->
+        <!--    </data>-->
 
-    <EditText
-        android:id="@+id/sid"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="학번"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
-        android:enabled="true"
-        android:text="회원가입"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.2" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/margin_16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_arrow_back_36" />
 
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back"
+            app:layout_constraintVertical_bias="0.0"
+            android:fillViewport="true"
+            tools:layout_editor_absoluteX="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_self_auth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_28dp"
+                            android:layout_marginTop="@dimen/margin_28dp"
+                            android:text="회원가입"
+                            android:textColor="@color/main2_color"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_self_auth_need"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="회원가입을 진행합니다"
+                            android:textColor="@color/main_color"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_self_auth" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="아이디"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_self_auth_need" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_id"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:inputType="text"
+                            android:maxLength="11"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/id" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="비밀번호"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_id" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_password"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="true"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_password" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_re_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="비밀번호 확인"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_password" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_password2"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="true"
+                            android:inputType="textPassword"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_re_password" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="이름"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_password2" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_name"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="true"
+                            android:inputType="text"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_sid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:text="학번"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_name" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_sid"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="true"
+                            android:inputType="numberDecimal"
+                            android:maxLength="7"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_sid" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="이메일"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_sid" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_email"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="true"
+                            android:inputType="textEmailAddress"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_email" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="전화번호"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_email" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_phone"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:enabled="false"
+                            android:inputType="phone"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_phone" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/text_class"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:maxLength="15"
+                            android:text="반"
+                            android:textColor="@color/main2_color"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_class"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="@dimen/margin_36dp"
+                            android:background="#259E9797"
+                            android:inputType="text"
+                            android:padding="8dp"
+                            android:singleLine="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/text_self_auth"
+                            app:layout_constraintTop_toBottomOf="@id/text_class" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/goRegister"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_32dp"
+                            android:layout_marginEnd="@dimen/margin_32dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/main_color"
+                            android:gravity="center"
+                            android:paddingTop="11dp"
+                            android:paddingBottom="12dp"
+                            android:text="회원가입"
+                            android:textColor="@color/main2_color"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/et_class"
+                            />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+
+
+
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

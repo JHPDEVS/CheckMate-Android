@@ -2,16 +2,39 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_36dp">36dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="margin_28dp">28dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.
     -->
     <dimen name="box_inset_layout_padding">0dp</dimen>
+    <!-- Dimensions for Card views -->
+    <dimen name="card_view_corner_radius">16dp</dimen>
 
+    <!-- Dimensions for margins -->
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_max">16dp</dimen>
+
+    <!--Dimensions for padding -->
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_max">16dp</dimen>
+
+    <!-- Dimensions for text -->
+    <dimen name="secondary_text_size">15sp</dimen>
+    <dimen name="text_normal_size">17sp</dimen>
+    <dimen name="title_size">24sp</dimen>
+    <dimen name="list_title_size">17sp</dimen>
+    <dimen name="tertiary_text_size">13sp</dimen>
     <!--
     This padding applies to both square and round screens. The total padding between the buttons
     and the window insets is box_inset_layout_padding (above variable) on square screens and
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/card_view_corner_radius"
+    app:cardElevation="2dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/classText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="게시판"
+            />
+
+        <TextView
+            android:id="@+id/goToBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textSize="15sp"
+            android:text="더 보기 >"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/timetablerecycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/goToBoard"
+            />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

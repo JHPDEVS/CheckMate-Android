@@ -10,7 +10,7 @@
     <string name="invalid_password">비밀번호를 확인해주세요</string>
     <string name="login_failed">"로그인 실패"</string>
     <string name="title_activity_register">Register</string>
-    <string name="menu1">출석</string>
+    <string name="menu1">메인</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

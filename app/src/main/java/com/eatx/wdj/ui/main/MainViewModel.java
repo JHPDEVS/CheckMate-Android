@@ -1,4 +1,4 @@
-package com.eatx.wdj.ui.login.ui.main;
+package com.eatx.wdj.ui.main;
 
 import androidx.lifecycle.ViewModel;
 

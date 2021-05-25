@@ -1,4 +1,4 @@
-package com.eatx.wdj.ui.login.ui.main;
+package com.eatx.wdj.ui.main;
 
 import android.os.Bundle;
 
@@ -13,26 +13,26 @@ import android.view.ViewGroup;
 
 import com.eatx.wdj.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SecondFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Board extends Fragment {
+public class CheckFragment extends Fragment {
 
 
     private MainViewModel mViewModel;
 
-    public static Board newInstance() {
-        return new Board();
+    public static CheckFragment newInstance() {
+        return new CheckFragment();
     }
-
+    View inflatedview = null;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_board, container, false);
+        inflatedview =  inflater.inflate(R.layout.fragment_check, container, false);
+        return inflatedview;
     }
 
     @Override

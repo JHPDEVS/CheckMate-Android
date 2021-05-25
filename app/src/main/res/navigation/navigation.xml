@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/first_fragment"
-        android:name="com.eatx.wdj.ui.login.ui.main.MainFragment"
+        android:name="com.eatx.wdj.ui.main.MainFragment"
         android:label="First Fragment"
         tools:layout="@layout/main_fragment" />
     <fragment
         android:id="@+id/second_fragment"
-        android:name="com.eatx.wdj.ui.login.ui.main.SecondFragment"
+        android:name="com.eatx.wdj.ui.main.SecondFragment"
         android:label="Second Fragment"
         tools:layout="@layout/fragment_second" />
 
