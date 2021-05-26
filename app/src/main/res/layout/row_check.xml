@@ -35,25 +35,61 @@
             android:textSize="9pt"
         />
 
-        <Button
-            android:id="@+id/goCheck"
+
+    <RelativeLayout
+        android:id="@+id/goCheck"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_below="@+id/checkText">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/checkButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/outline_done_outline_24"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/main2_color"/>
+            />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="출석하기"
-            android:layout_marginStart="16dp"
-            android:layout_below="@+id/checkText"
-            android:textSize="15sp"
+            android:layout_below="@+id/checkButton"
             />
+    </RelativeLayout>
 
-        <Button
+
+        <RelativeLayout
             android:id="@+id/checkState"
             android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
-            android:text="출석현황"
-            android:layout_marginStart="16dp"
-            android:layout_toRightOf="@+id/goCheck"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_below="@+id/checkText"
-            android:textSize="15sp"
+            android:layout_toRightOf="@+id/goCheck">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/checkStateImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/outline_developer_board_24"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/main2_color"/>
             />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출석현황"
+                android:layout_below="@+id/checkStateImage"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
