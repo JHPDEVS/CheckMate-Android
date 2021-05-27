@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,14 +37,19 @@ import com.eatx.wdj.ui.main.Check;
 import com.eatx.wdj.ui.main.CheckActivity;
 import com.eatx.wdj.ui.main.MainFragment;
 import com.eatx.wdj.ui.MapsActivity;
+import com.eatx.wdj.ui.main.TimeTable;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -55,8 +62,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TimeTableModel> timetables;
     private RecyclerView.Adapter mAdapter , tableAdapter;
     private MainActivity activity;
-    final static private String Boardurl = "https://eatx.shop/.well-known/Board.php";
-    final static private String TimeTableUrl = "https://eatx.shop/.well-known/TimeTable.php";
+    final static private String Boardurl = "https://ckmate.shop/.well-known/Board.php";
+    final static private String TimeTableUrl = "https://ckmate.shop/.well-known/TodayTimeTable.php";
     public MainAdapter(Context mContext,ArrayList<mainModel> dataList , MainActivity activity) {
 //        TypedValue mTypedValue = new TypedValue();
 //        mContext.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
@@ -139,6 +146,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             boardView.mBoardTitle.setText(mainModel.getBoardTitle());
             recyclerView = mView.findViewById(R.id.shortboard);
+            recyclerView.addItemDecoration(new DividerItemDecoration(mView.getContext(), 1));
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
             recyclerView.setLayoutManager(mLayoutManager);
             posts = new ArrayList<>();
@@ -148,7 +156,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             boardView.moreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)MainActivity.mContext).setBoardTab();
+                    ((MainActivity)MainActivity.mContext).setBoardTab(4);
                     ((MainActivity)mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, new Board())
                             .commit();
@@ -158,14 +166,28 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             TimeTableV timeTableV = (TimeTableV) holder;
             mainModel mainModel = getItemData(position);
 
-            timeTableV.classText.setText("wdj");
+
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar time = Calendar.getInstance();
+            String dayLongName = time.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+            String time1 = format1.format(time.getTime());
+            timeTableV.classText.setText("오늘의 시간표");
+            timeTableV.date.setText(" ("+time1+" " + dayLongName+")");
             timetableRecylcerView = mView.findViewById(R.id.timetablerecycle);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false);
             timetableRecylcerView.setLayoutManager(mLayoutManager);
             timetables = new ArrayList<>();
             tableAdapter = new TimeTableAdapter(mContext,timetables);
             getTimeTable();
-
+            timeTableV.goMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)MainActivity.mContext).setBoardTab(3);
+                    ((MainActivity)mContext).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, new TimeTable())
+                            .commit();
+                }
+            });
         }
 
     }
@@ -335,26 +357,27 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class CheckView extends RecyclerView.ViewHolder {
         //        public final View mView;
         public final TextView checkText;
-        public final Button goCheck,checkState;
+        public final RelativeLayout goCheck;
         public CheckView(View mView) {
             super(mView);
 //            this.mView = mView;
 
             //     mID = (TextView) mView.findViewById(R.id.mID);
             checkText = (TextView) mView.findViewById(R.id.checkText);
-            goCheck = (Button) mView.findViewById(R.id.goCheck);
-            checkState = (Button) mView.findViewById(R.id.checkState);
+            goCheck = (RelativeLayout) mView.findViewById(R.id.goCheck);
         }
     }
     public class TimeTableV extends RecyclerView.ViewHolder {
         //        public final View mView;
-        public final TextView classText;
+        public final TextView classText , date, goMore;
         public TimeTableV(View mView) {
             super(mView);
 //            this.mView = mView;
 
             //     mID = (TextView) mView.findViewById(R.id.mID);
             classText = (TextView) mView.findViewById(R.id.classText);
+            date = (TextView) mView.findViewById(R.id.today);
+            goMore = (TextView) mView.findViewById(R.id.goMore);
         }
     }
 }

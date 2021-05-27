@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void setBoardTab() {
+    public void setBoardTab(int tab) {
         bottomBar = (SmoothBottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setItemActiveIndex(4);
+        bottomBar.setItemActiveIndex(tab);
     }
 
     @Override
