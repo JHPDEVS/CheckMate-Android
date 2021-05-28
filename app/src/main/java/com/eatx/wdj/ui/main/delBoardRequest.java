@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class delBoardRequest extends StringRequest {
 
-    final static private String URL = "https://eatx.shop/.well-known/delBoard.php";
+    final static private String URL = "https://ckmate.shop/.well-known/delBoard.php";
 
     private Map<String, String> map;
 

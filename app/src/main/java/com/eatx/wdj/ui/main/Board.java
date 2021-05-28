@@ -44,7 +44,7 @@ import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.data.model.mainModel;
 import com.eatx.wdj.ui.Register.Register;
 import com.eatx.wdj.ui.Register.RegisterRequest;
-import com.eatx.wdj.ui.Register.WriteRequest;
+import com.eatx.wdj.ui.main.WriteRequest;
 import com.eatx.wdj.ui.login.LoginActivity;
 import com.eatx.wdj.ui.login.LoginRequest;
 import com.eatx.wdj.ui.login.MainActivity;
@@ -71,7 +71,7 @@ import java.util.List;
 public class Board extends Fragment {
 
     private RecyclerView recyclerView;
-    final static private String url = "https://eatx.shop/.well-known/Board.php";
+    final static private String url = "https://ckmate.shop/.well-known/Board.php";
     private MainViewModel mViewModel;
     private ArrayList<BoardModel> dataList;
     private BoardAdapter adapter;
