@@ -20,11 +20,20 @@
             android:layout_marginStart="16dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="게시판"
+            android:text="시간표"
             />
-
         <TextView
-            android:id="@+id/goToBoard"
+            android:id="@+id/today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/classText"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:text="yyyy-mm-dd"
+            />
+        <TextView
+            android:id="@+id/goMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

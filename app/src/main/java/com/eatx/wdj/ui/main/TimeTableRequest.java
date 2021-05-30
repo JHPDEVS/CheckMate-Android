@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TimeTableRequest extends StringRequest {
 
-    final static private String URL = "https://eatx.shop/.well-known/getTimeTable.php";
+    final static private String URL = "https://ckmate.shop/.well-known/getTimeTable.php";
 
     private Map<String, String> map;
 

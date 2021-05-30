@@ -69,7 +69,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.row_board_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.row_timetable_item,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -78,8 +78,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         final TimeTableModel timetable = timetables.get(position);
-        holder.mCom.setText( "["+timetable.getClassTitle()+"]");
-        holder.mTitle.setText(String.valueOf(timetable.getStartTime()));
+        holder.mCom.setText(timetable.getStartTime() + ":00 ~" + timetable.getEndTime()+":00");
+        holder.mTitle.setText( "["+timetable.getClassTitle()+"]");
         holder.mWriter.setText(timetable.getProfessorName());
 
     }

@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -40,7 +41,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class TimeTable extends Fragment {
-    final static private String url = "https://eatx.shop/.well-known/TimeTable.php";
+    final static private String url = "https://ckmate.shop/.well-known/TimeTable.php";
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -63,14 +64,10 @@ public class TimeTable extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         inflatedview =  inflater.inflate(R.layout.fragment_time_table, container, false);
-//        addBtn = inflatedview.findViewById(R.id.add_btn);
-//        clearBtn = inflatedview.findViewById(R.id.clear_btn);
-//        saveBtn = inflatedview.findViewById(R.id.save_btn);
-//        loadBtn =  inflatedview.findViewById(R.id.load_btn);
 
         timetable =  inflatedview.findViewById(R.id.timetable);
         getTimeTable();
-        timetable.setHeaderHighlight(1);
+        setToday(); // 오늘 날짜로 설정
         timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
@@ -114,6 +111,11 @@ public class TimeTable extends Fragment {
             }
         });
         return inflatedview;
+    }
+    private void setToday() {
+        Calendar time = Calendar.getInstance();
+        int day = time.get(Calendar.DAY_OF_WEEK) - 1;
+        timetable.setHeaderHighlight(day);
     }
     private void getTimeTable() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
