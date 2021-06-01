@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheet2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="40dp"
+    app:behavior_hideable="false"
+    android:background="@android:color/background_light"
+    app:behavior_peekHeight="100dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/margin_16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            tools:context=".ui.main.Check">
+
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="현재닐짜"
+                android:textSize="9pt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="13dp"
+                android:background="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/absencebutton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="64dp"
+                android:text="구나현"
+                app:layout_constraintBottom_toTopOf="@+id/reason"
+                app:layout_constraintEnd_toStartOf="@+id/attendbutton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/absencebutton"
+                android:layout_width="65dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="24dp"
+                android:text="결석"
+                app:layout_constraintEnd_toStartOf="@+id/independentbutton"
+                app:layout_constraintStart_toEndOf="@+id/latebutton"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+            <Button
+                android:id="@+id/attendbutton"
+                android:layout_width="65dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="6dp"
+                android:text="출석"
+                app:layout_constraintEnd_toStartOf="@+id/latebutton"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+            <Button
+                android:id="@+id/latebutton"
+                android:layout_width="65dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="24dp"
+                android:text="지각"
+                app:layout_constraintStart_toEndOf="@+id/attendbutton"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+            <Button
+                android:id="@+id/independentbutton"
+                android:layout_width="65dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="15dp"
+                android:text="자습"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/absencebutton"
+                app:layout_constraintTop_toBottomOf="@+id/date" />
+
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/circle"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="6dp"-->
+            <!--                android:layout_marginEnd="3dp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/time"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/attendbutton"-->
+            <!--                app:srcCompat="@drawable/shape" />-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/circle2"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginEnd="3dp"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/fieldturn"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/circle"-->
+            <!--                app:srcCompat="@drawable/shape" />-->
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="99dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/round_background"
+                android:text="HH : MM"
+                app:layout_constraintBottom_toTopOf="@+id/fieldturn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/absencebutton" />
+
+            <TextView
+                android:id="@+id/fieldturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="33dp"
+                android:text="운동장 바퀴수"
+                app:layout_constraintBottom_toTopOf="@+id/reason"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/reason"
+                android:layout_width="326dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="34dp"
+                android:background="@drawable/item_border"
+                android:ems="30"
+                android:hint="사유"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldturn" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="13dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checknotice"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/checknotice"
+                android:layout_width="327dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:text="2021.5.8(토) 오전 8: 32 구나현님 출석하셨습니다."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.216"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reason" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+
