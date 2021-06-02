@@ -38,18 +38,12 @@
         <activity
             android:name=".geofencing.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity
-            android:name=".geofencing.MapsActivity2"
-            android:label="@string/title_activity_maps2" />
 
         <receiver
             android:name=".geofencing.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".ui.MapsActivity"
-            android:label="@string/title_activity_maps" />
         <activity android:name=".ui.main.Check" />
         <activity android:name=".ui.main.CheckActivity" />
         <activity
