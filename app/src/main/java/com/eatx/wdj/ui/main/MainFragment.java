@@ -48,7 +48,7 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
     private MainViewModel mViewModel;
-    private TextView hello;
+    private TextView hello ;
     private String id;
     private MainAdapter adapter;
     private ArrayList<mainModel> menu;
@@ -120,6 +120,7 @@ public class MainFragment extends Fragment {
                         System.out.println(name );
                         System.out.println("----------------");
 
+
                         setMain();
                     } else {
                         System.out.println("오류 ");
@@ -137,9 +138,9 @@ public class MainFragment extends Fragment {
 
     private void setMain() {
         hello.setText(name+"님 반갑습니다!");
-        menu.add(new mainModel(name,2,true));
-        menu.add(new mainModel("게시판", 1));
+        menu.add(new mainModel(name,id,sid,classValue,2,true));
         menu.add(new mainModel("WDJ 시간표",3,true,true));
+        menu.add(new mainModel("게시판", 1));
         adapter.notifyDataSetChanged();
     }
 

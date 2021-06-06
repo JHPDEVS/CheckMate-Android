@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -31,17 +32,19 @@ import com.eatx.wdj.*;
 import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.data.model.TimeTableModel;
 import com.eatx.wdj.data.model.mainModel;
+import com.eatx.wdj.geofencing.MapsActivity;
 import com.eatx.wdj.ui.login.MainActivity;
 import com.eatx.wdj.ui.main.Board;
 import com.eatx.wdj.ui.main.Check;
 import com.eatx.wdj.ui.main.CheckActivity;
 import com.eatx.wdj.ui.main.MainFragment;
-import com.eatx.wdj.ui.MapsActivity;
 import com.eatx.wdj.ui.main.TimeTable;
+import com.eatx.wdj.ui.main.UserInfoRequest;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -55,16 +58,17 @@ import java.util.Locale;
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //    private int mBackground;
     private ArrayList<mainModel> mValues = new ArrayList<>();
-    View mView ;
-    private RecyclerView recyclerView , timetableRecylcerView;
+    View mView;
+    private RecyclerView recyclerView, timetableRecylcerView;
     private Context mContext;
     private List<Post> posts;
     private List<TimeTableModel> timetables;
-    private RecyclerView.Adapter mAdapter , tableAdapter;
+    private RecyclerView.Adapter mAdapter, tableAdapter;
     private MainActivity activity;
     final static private String Boardurl = "https://ckmate.shop/.well-known/Board.php";
     final static private String TimeTableUrl = "https://ckmate.shop/.well-known/TodayTimeTable.php";
-    public MainAdapter(Context mContext,ArrayList<mainModel> dataList , MainActivity activity) {
+
+    public MainAdapter(Context mContext, ArrayList<mainModel> dataList, MainActivity activity) {
 //        TypedValue mTypedValue = new TypedValue();
 //        mContext.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
 //        mBackground = mTypedValue.resourceId;
@@ -74,23 +78,18 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == codeViewType.ViewType.LEFT_CONTENT) {
+        if (viewType == codeViewType.ViewType.LEFT_CONTENT) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_main_fragment, parent, false);
             return new MainViewHolder(mView);
-        }
-        else if(viewType == codeViewType.ViewType.SHORT_BOARD) {
+        } else if (viewType == codeViewType.ViewType.SHORT_BOARD) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_board, parent, false);
             return new BoardView(mView);
-        }
-        else if(viewType == codeViewType.ViewType.CHECK) {
+        } else if (viewType == codeViewType.ViewType.CHECK) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_check, parent, false);
             return new CheckView(mView);
-        }
-        else if(viewType == codeViewType.ViewType.TIME_TABLE) {
+        } else if (viewType == codeViewType.ViewType.TIME_TABLE) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_timetable, parent, false);
             return new TimeTableV(mView);
         } else {
@@ -101,7 +100,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof MainViewHolder) {
+        if (holder instanceof MainViewHolder) {
             MainViewHolder holder2 = (MainViewHolder) holder;
             mainModel mInfo = getItemData(position);
 
@@ -125,22 +124,30 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 }
             });
-        } else if(holder instanceof  CheckView) {
+        } else if (holder instanceof CheckView) {
             CheckView checkView = (CheckView) holder;
             mainModel mainModel = getItemData(position);
 
-            checkView.checkText.setText(mainModel.getName()+"님 출석하러 가세요");
+            checkView.checkText.setText(mainModel.getName() + "님 출석하러 가세요");
 
             checkView.goCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, MapsActivity.class);
+                    intent.putExtra("ID", mainModel.getmID());
+                    intent.putExtra("NAME", mainModel.getName());
+                    intent.putExtra("SID", mainModel.getmSID());
+                    intent.putExtra("CLASS", mainModel.getClassValue());
+                    System.out.println(mainModel.getmID());
+                    System.out.println(mainModel.getName());
+                    System.out.println(mainModel.getmSID());
+                    System.out.println(mainModel.getClassValue());
                     v.getContext().startActivity(intent);
                 }
             });
 
 
-        }else if(holder instanceof  BoardView) {
+        } else if (holder instanceof BoardView) {
             BoardView boardView = (BoardView) holder;
             mainModel mainModel = getItemData(position);
 
@@ -150,19 +157,19 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
             recyclerView.setLayoutManager(mLayoutManager);
             posts = new ArrayList<>();
-            mAdapter = new shortBoardAdapter(mContext,posts);
+            mAdapter = new shortBoardAdapter(mContext, posts);
             getBoard();
 
             boardView.moreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)MainActivity.mContext).setBoardTab(4);
-                    ((MainActivity)mContext).getSupportFragmentManager().beginTransaction()
+                    ((MainActivity) MainActivity.mContext).setBoardTab(4);
+                    ((MainActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, new Board())
                             .commit();
                 }
             });
-        } else if(holder instanceof TimeTableV) {
+        } else if (holder instanceof TimeTableV) {
             TimeTableV timeTableV = (TimeTableV) holder;
             mainModel mainModel = getItemData(position);
 
@@ -172,18 +179,18 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             String dayLongName = time.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
             String time1 = format1.format(time.getTime());
             timeTableV.classText.setText("오늘의 시간표");
-            timeTableV.date.setText(" ("+time1+" " + dayLongName+")");
+            timeTableV.date.setText(" (" + time1 + " " + dayLongName + ")");
             timetableRecylcerView = mView.findViewById(R.id.timetablerecycle);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
             timetableRecylcerView.setLayoutManager(mLayoutManager);
             timetables = new ArrayList<>();
-            tableAdapter = new TimeTableAdapter(mContext,timetables);
+            tableAdapter = new TimeTableAdapter(mContext, timetables);
             getTimeTable();
             timeTableV.goMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)MainActivity.mContext).setBoardTab(3);
-                    ((MainActivity)mContext).getSupportFragmentManager().beginTransaction()
+                    ((MainActivity) MainActivity.mContext).setBoardTab(3);
+                    ((MainActivity) mContext).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, new TimeTable())
                             .commit();
                 }
@@ -191,6 +198,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
     }
+
     private void getBoard (){
         posts.clear();
         System.out.println("다이얼로그");

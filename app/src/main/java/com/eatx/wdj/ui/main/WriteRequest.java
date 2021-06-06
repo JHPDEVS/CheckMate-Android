@@ -1,4 +1,4 @@
-package com.eatx.wdj.ui.Register;
+package com.eatx.wdj.ui.main;
 
 import androidx.annotation.Nullable;
 
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WriteRequest extends StringRequest {
-    final static private String URL = "https://eatx.shop/.well-known/Write.php";
+    final static private String URL = "https://ckmate.shop/.well-known/Write.php";
 
     private Map<String, String> map;
 

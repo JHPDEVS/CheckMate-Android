@@ -7,5 +7,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#ffcc33</color>
     <color name="main2_color">#949597</color>
+    <color name="brown">#6f4314</color>
+    <color name="green">#518d7d</color>
+    <color name="yellow2">#f59b25</color>
+    <color name="notpink">#e45f5a</color>
     <color name="colorLightFont">#ddd</color>
 </resources>

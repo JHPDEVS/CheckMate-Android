@@ -20,7 +20,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.eatx.wdj.ui.Register.Register;
+import com.eatx.wdj.ui.Register.RegisterRequest;
+import com.eatx.wdj.ui.login.MainActivity;
+import com.eatx.wdj.ui.main.CheckRequest;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -31,13 +39,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.eatx.wdj.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,11 +67,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String GEOFENCE_ID = "GEOFENCE";
     private int RADIUS = 50;
     private int run;
-    private TextView date , time , mMinute , fieldturn;
+    private TextView date , time , mMinute , fieldturn , username;
     LinearLayout layoutbottomSheet;
     LinearLayout layoutbottomSheet2;
     private TimerTask updateTime;
     private String getCurrentTime , getCurrentMinute;
+    private Button attendbutton;
     long now = System.currentTimeMillis();
 
     public static MapsActivity getInstance() {
@@ -86,6 +97,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         layoutbottomSheet.setVisibility(View.GONE);
         updateTime();
         registerReceiver(broadcastReceiver,new IntentFilter("enter"));
+
+        username = findViewById(R.id.username);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("ID");
+        String name = intent.getStringExtra("NAME");
+        int sid = intent.getIntExtra("SID",0);
+        String classValue = intent.getStringExtra("CLASS");
+        System.out.println(id + "id값");
+        System.out.println(classValue + "id값");
+        username.setText(name+"님 출석하세요!");
+
+        attendbutton = findViewById(R.id.attendbutton);
+        attendbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if(success) {
+                                Toast.makeText(getApplicationContext(),"출석에 성공했습니다",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"출석에 실패했습니다",Snackbar.LENGTH_SHORT);
+                                snackbar.setAnchorView(findViewById(R.id.bottomSheet2));
+                                snackbar.show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                // 서버로 Volley를 이용해서 요청함
+                CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue,"1",getCurrentMinute,getCurrentTime,run,responseListener);
+                RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
+                queue.add(checkRequest);
+            }
+        });
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -268,7 +319,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(hour>0) {
                     run = hour * 12;
                     if (minute >= 5) {
-                        run = run + (minute % 5);
+                        run = run + ((int) minute / 5);
                     }
                 }
                 System.out.println(run + "바퀴 돌면됨");

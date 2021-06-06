@@ -71,10 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void goCheck(View v) {
-        Intent intent = new Intent(this, Check.class);
-        startActivity(intent);
-    }
+
 
     public void setBoardTab(int tab) {
         bottomBar = (SmoothBottomBar) findViewById(R.id.bottomBar);

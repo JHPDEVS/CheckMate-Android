@@ -181,52 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    class Task extends AsyncTask<Boolean, Void, Boolean> {
 
-        @Override
-        protected Boolean doInBackground(Boolean... booleans) {
-            PreparedStatement st;
-            ResultSet rs;
-            String username = usernameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
-            Connection connection = null;
-            String query = "SELECT * FROM `students` WHERE `id` = ? AND `password` = ?";
-            try {
-                Class.forName("org.mariadb.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mariadb://eatx.shop:3307/student_db","wdj","wdj123");
-                st = connection.prepareStatement(query);
-                st.setString(1,username);
-                st.setString(2,password);
-                rs = st.executeQuery();
-
-                if(rs.next()) {
-                    isSuccessful = true;
-                    System.out.println("로그인 성공");
-                    return isSuccessful = true;
-                } else {
-                    Handler mHandler = new Handler(Looper.getMainLooper());
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 사용하고자 하는 코드
-                            isSuccessful = false;
-
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"아이디나 비밀번호를 확인해주세요",Snackbar.LENGTH_SHORT);
-                            snackbar.setAnchorView(findViewById(R.id.goRegister));
-                            snackbar.show();
-                        }
-                    }, 0);
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                System.out.println("로그인 실패");
-                return isSuccessful;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            return isSuccessful;
-        }
-    }
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience

@@ -25,6 +25,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        app:backgroundColor="@color/main2_color"
+        app:backgroundColor="@color/main_color"
+        app:indicatorRadius="@dimen/margin_32dp"
+        app:textSize="13sp"
+        app:cornerRadius="8dp"
         app:menu="@menu/menu"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

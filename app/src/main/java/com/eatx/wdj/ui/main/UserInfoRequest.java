@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class UserInfoRequest extends StringRequest {
 
-    final static private String URL = "https://eatx.shop/.well-known/getUserInfo.php";
+    final static private String URL = "https://ckmate.shop/.well-known/getUserInfo.php";
 
     private Map<String, String> map;
 

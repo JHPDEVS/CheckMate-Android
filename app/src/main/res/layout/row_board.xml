@@ -6,6 +6,7 @@
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="@dimen/card_view_corner_radius"
     app:cardElevation="2dp"
+    android:padding="@dimen/margin_16dp"
     xmlns:tools="http://schemas.android.com/tools">
 
 <RelativeLayout
@@ -33,6 +34,10 @@
         android:textStyle="bold"
         android:layout_alignParentEnd="true"
         />
+    <View style="@style/MainDivider"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="@id/shortboard"
+        app:layout_constraintTop_toBottomOf="@id/goToBoard" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shortboard"

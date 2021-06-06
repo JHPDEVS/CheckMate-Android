@@ -6,6 +6,25 @@ public class mainModel {
     public String mText;
     public String mID;
     public String name;
+    public String classValue;
+
+    public String getClassValue() {
+        return classValue;
+    }
+
+    public void setClassValue(String classValue) {
+        this.classValue = classValue;
+    }
+
+    public String getDeviceid() {
+        return deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
+    }
+
+    public String deviceid;
     public int mSID;
     public boolean check;
     public String mSimpleTitle;
@@ -28,13 +47,24 @@ public class mainModel {
 
     public String mSimpleText;
     private int viewType;
-    public mainModel(String name, int viewType, boolean check) {
+
+    public mainModel(String name ,  String mID, int mSID, String classValue) {
+        this.name = name;
+        this.mID = mID;
+        this.mSID =mSID;
+        this.classValue = classValue;
+    }
+    public mainModel(String name,String mID,int mSID,String classValue, int viewType, boolean check) {
         this.name = name;
         this.viewType = viewType;
+        this.mID = mID;
+        this.mSID = mSID;
+        this.classValue = classValue;
         this.check = check;
     }
     public mainModel(String name, int viewType, boolean check , boolean check2) {
         this.name = name;
+        this.mID = mID;
         this.viewType = viewType;
     }
     public mainModel(String BoardTitle, int viewType) {
