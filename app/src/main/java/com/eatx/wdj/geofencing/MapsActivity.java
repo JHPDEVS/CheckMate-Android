@@ -71,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LinearLayout layoutbottomSheet;
     LinearLayout layoutbottomSheet2;
     private TimerTask updateTime;
-    private String getCurrentTime , getCurrentMinute;
+    private String getCurrentTime , getCurrentMinute , getDate;
     private Button attendbutton;
     long now = System.currentTimeMillis();
 
@@ -132,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 };
                 // 서버로 Volley를 이용해서 요청함
-                CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue,"1",getCurrentMinute,getCurrentTime,run,responseListener);
+                CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue,"1",getDate,getCurrentTime,run,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
                 queue.add(checkRequest);
             }
@@ -285,7 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void updateTime() {
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일");
-        String getDate = simpleDate.format(mDate);
+        getDate = simpleDate.format(mDate);
 
         date = findViewById(R.id.date);
         date.setText(getDate);
@@ -322,8 +322,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         run = run + ((int) minute / 5);
                     }
                 }
-                System.out.println(run + "바퀴 돌면됨");
-                System.out.println(hour+"시" + minute+"분입니다");
+//                System.out.println(run + "바퀴 돌면됨");
+//                System.out.println(hour+"시" + minute+"분입니다");
                 fieldturn.setText("축하합니다 지금 출석 시" + run + "바퀴를 달리시면 됩니다!");
                 time.setText(getCurrentTime);
             }
