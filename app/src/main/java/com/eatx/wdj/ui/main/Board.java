@@ -137,7 +137,7 @@ public class Board extends Fragment {
         );
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
-        SimpleDateFormat simpleDate = new SimpleDateFormat("MM월 dd일 hh시 mm분 ss초");
+        SimpleDateFormat simpleDate = new SimpleDateFormat("M월 d일 aa h:mm");
         String getTime = simpleDate.format(mDate);
         System.out.println(getTime + "시간 ㅇㅇㅇㅇㅇㅇㅇ");
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
