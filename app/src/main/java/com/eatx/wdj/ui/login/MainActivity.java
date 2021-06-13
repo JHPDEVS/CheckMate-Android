@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.eatx.wdj.ui.main.Board;
 import com.eatx.wdj.ui.main.Check;
-import com.eatx.wdj.ui.main.CheckActivity;
 import com.eatx.wdj.ui.main.CheckFragment;
 import com.eatx.wdj.ui.main.MainFragment;
 

@@ -12,4 +12,8 @@
     <color name="yellow2">#f59b25</color>
     <color name="notpink">#e45f5a</color>
     <color name="colorLightFont">#ddd</color>
+    <color name="background">#ffffff</color>
+    <color name="edittext">#f2f2f2</color>
+    <color name="board_theme">#004680</color>
+    <color name="timetable_theme">#ff6f61</color>
 </resources>

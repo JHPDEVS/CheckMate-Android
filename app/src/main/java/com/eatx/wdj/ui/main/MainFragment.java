@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.eatx.wdj.R;
-import com.eatx.wdj.data.ItemAdapter;
 import com.eatx.wdj.data.MainAdapter;
 import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.data.model.mainModel;
@@ -33,7 +33,6 @@ import com.eatx.wdj.data.model.userInfo;
 import com.eatx.wdj.ui.login.LoginActivity;
 import com.eatx.wdj.ui.login.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.UserInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +52,7 @@ public class MainFragment extends Fragment {
     private MainAdapter adapter;
     private ArrayList<mainModel> menu;
     private userInfo user;
+    private ImageView search, userInfo;
     private RecyclerView recyclerView;
     private String name , classValue,  email;
     private int sid, phoneNumber;
@@ -74,7 +74,28 @@ public class MainFragment extends Fragment {
         inflatedview = inflater.inflate(R.layout.main_fragment, container, false);
         hello = (TextView) inflatedview.findViewById(R.id.text_self_auth_need);
         user = (userInfo) getActivity().getIntent().getSerializableExtra("user");
-
+        userInfo = inflatedview.findViewById(R.id.userInfo);
+        userInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UserInfo.class);
+                intent.putExtra("id",id);
+                intent.putExtra("sid",sid);
+                intent.putExtra("phoneNumber",phoneNumber);
+                intent.putExtra("classValue",classValue);
+                intent.putExtra("email",email);
+                intent.putExtra("name",name);
+                startActivity(intent);
+            }
+        });
+        search = inflatedview.findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),BoardSearch.class);
+                startActivity(intent);
+            }
+        });
         getUserInfo();
         menu = new ArrayList<>();
         recyclerView = inflatedview.findViewById(R.id.recyclerView);

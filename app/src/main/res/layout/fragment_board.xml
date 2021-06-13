@@ -18,52 +18,56 @@ tools:context=".ui.main.MainFragment">
     app:srcCompat="@drawable/outline_done_outline_24" />
 
 <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/text_self_auth"
+    android:id="@+id/board_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin_16dp"
     android:text="게시판"
-    android:textColor="@color/main2_color"
+    android:textStyle="bold"
+    android:fontFamily="@font/outline"
+    android:textColor="@color/board_theme"
     android:textSize="20sp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
 <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/text_self_auth_need"
+    android:id="@+id/board_desc"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="소통할 수 있는 게시판입니다"
-    android:textColor="@color/main_color"
+    android:fontFamily="@font/basic"
+    android:textColor="@color/black"
     android:textSize="14sp"
-    app:layout_constraintStart_toStartOf="@id/text_self_auth"
-    app:layout_constraintTop_toBottomOf="@id/text_self_auth" />
+    app:layout_constraintStart_toStartOf="@id/board_title"
+    app:layout_constraintTop_toBottomOf="@id/board_title" />
 
 
 
 
 <ImageView
-    android:id="@+id/share"
+    android:id="@+id/searchButton"
     android:layout_width="36dp"
     android:layout_height="36dp"
     android:layout_marginRight="@dimen/margin_16dp"
     android:src="@drawable/ic_baseline_search_24"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toEndOf="@+id/text_self_auth_need"
-    app:layout_constraintTop_toTopOf="@+id/text_self_auth" />
+    app:layout_constraintStart_toEndOf="@+id/board_desc"
+    app:layout_constraintTop_toTopOf="@+id/board_title" />
 
 
     <View style="@style/MainDivider"
     android:id="@+id/divider"
     android:layout_marginTop="6dp"
-    app:layout_constraintStart_toStartOf="@id/text_self_auth_need"
-    app:layout_constraintTop_toBottomOf="@id/text_self_auth_need" />
+    app:layout_constraintStart_toStartOf="@id/board_desc"
+    app:layout_constraintTop_toBottomOf="@id/board_desc" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/boardrecyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="76dp"
+        android:background="#EAE9E9"
         android:clipToPadding="false"
         android:overScrollMode="ifContentScrolls"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -74,13 +78,11 @@ tools:context=".ui.main.MainFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_marginBottom="8dp"
-        app:backgroundTint="@color/main_color"
-        android:tint="@color/white"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_baseline_post_add_24"
+        app:tint="@color/white"
+        app:backgroundTint="@color/board_theme"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

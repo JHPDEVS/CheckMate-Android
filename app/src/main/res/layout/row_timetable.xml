@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="@dimen/card_view_corner_radius"
-    app:cardElevation="2dp"
+    android:padding="@dimen/margin_8dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -19,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/birobold"
             android:text="시간표"
             />
         <TextView
@@ -29,6 +28,7 @@
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/classText"
             android:textSize="12sp"
+            android:fontFamily="@font/bitrobasic"
             android:textStyle="bold"
             android:text="yyyy-mm-dd"
             />
@@ -38,17 +38,26 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:textSize="15sp"
-            android:text="더 보기 >"
+            android:textColor="@color/main2_color"
+            android:text="더보기 >"
+            android:fontFamily="@font/bitrobasic"
             android:textStyle="bold"
             android:layout_alignParentEnd="true"
             />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="@dimen/card_view_corner_radius"
+            app:cardElevation="2dp"
+            android:layout_below="@+id/goMore"
+            >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timetablerecycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/goToBoard"
             />
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

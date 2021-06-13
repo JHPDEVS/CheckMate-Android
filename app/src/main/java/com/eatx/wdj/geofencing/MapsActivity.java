@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -94,11 +95,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LinearLayout layoutbottomSheet = findViewById(R.id.bottomSheet);
         LinearLayout layoutbottomSheet2 = findViewById(R.id.bottomSheet2);
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(layoutbottomSheet);
-        layoutbottomSheet.setVisibility(View.GONE);
-        updateTime();
+        layoutbottomSheet2.setVisibility(View.GONE);
         registerReceiver(broadcastReceiver,new IntentFilter("enter"));
-
-        username = findViewById(R.id.username);
+        updateTime();
+        username = findViewById(R.id.nameValue);
         Intent intent = getIntent();
         String id = intent.getStringExtra("ID");
         String name = intent.getStringExtra("NAME");
@@ -108,7 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println(classValue + "id값");
         username.setText(name+"님 출석하세요!");
 
-        attendbutton = findViewById(R.id.attendbutton);
+        attendbutton = findViewById(R.id.attend);
         attendbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 };
                 // 서버로 Volley를 이용해서 요청함
-                CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue,"1",getDate,getCurrentTime,run,responseListener);
+                CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue, Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID),getDate,getCurrentTime,run,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
                 queue.add(checkRequest);
             }
@@ -156,7 +156,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void run() {
                 LinearLayout layoutbottomSheet = findViewById(R.id.bottomSheet);
                 LinearLayout layoutbottomSheet2 = findViewById(R.id.bottomSheet2);
-                layoutbottomSheet.setVisibility(View.VISIBLE);
+                layoutbottomSheet.setVisibility(View.GONE);
                 layoutbottomSheet2.setVisibility(View.VISIBLE);
             }
         });
@@ -283,13 +283,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addCircle(circleOptions);
     }
     public void updateTime() {
+        Log.d("UPDATE TIME","시간 업데이트됨");
         Date mDate = new Date(now);
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일");
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 M월 d일 EE요일");
         getDate = simpleDate.format(mDate);
 
-        date = findViewById(R.id.date);
+        date = findViewById(R.id.dateValue);
         date.setText(getDate);
-        time = findViewById(R.id.time2);
+        time = findViewById(R.id.timeValue);
         updateTime = new TimerTask() {
             @Override
             public void run() {
@@ -312,7 +313,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getCurrentTime = getTime.format(mTime);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date());
-                System.out.println(calendar.getTime());
                 int hour = calendar.get(Calendar.HOUR_OF_DAY) - 9;
                 int minute = calendar.get(Calendar.MINUTE);
                 fieldturn = findViewById(R.id.fieldturn);
@@ -324,7 +324,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 //                System.out.println(run + "바퀴 돌면됨");
 //                System.out.println(hour+"시" + minute+"분입니다");
-                fieldturn.setText("축하합니다 지금 출석 시" + run + "바퀴를 달리시면 됩니다!");
+                fieldturn.setText("지금 출석 시 " + run + "바퀴를 달리시면 됩니다!");
                 time.setText(getCurrentTime);
             }
         };

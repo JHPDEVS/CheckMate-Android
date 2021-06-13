@@ -25,9 +25,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
-        app:backgroundColor="@color/main_color"
+        app:backgroundColor="#f2f2f2"
+        app:indicatorColor="@color/black"
+        app:iconTint="@color/black"
         app:indicatorRadius="@dimen/margin_32dp"
-        app:textSize="13sp"
+        app:textSize="0dp"
         app:cornerRadius="8dp"
         app:menu="@menu/menu"/>
 

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="@dimen/card_view_corner_radius"
-    app:cardElevation="2dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="@dimen/margin_8dp"
+    xmlns:tools="http://schemas.android.com/tools">a
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,8 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/birobold"
             android:text="출석"
+            android:textColor="@color/black"
             />
 
 
@@ -30,16 +29,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="박주형님 출석하러 가세요!"
+            android:fontFamily="@font/bitrobasic"
+            android:textColor="@color/main2_color"
             android:layout_marginStart="16dp"
             android:layout_below="@+id/boardSubject"
             android:textSize="9pt"
         />
 
-
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="@dimen/card_view_corner_radius"
+            app:cardElevation="2dp"
+            android:layout_below="@+id/checkText"
+            >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
     <RelativeLayout
         android:id="@+id/goCheck"
         android:layout_width="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="8dp"
         android:layout_height="wrap_content"
         style="?android:attr/borderlessButtonStyle"
@@ -67,7 +80,7 @@
         <RelativeLayout
             android:id="@+id/checkState"
             android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
             android:layout_below="@+id/checkText"
@@ -90,6 +103,7 @@
                 android:layout_below="@+id/checkStateImage"
                 />
         </RelativeLayout>
-
+</LinearLayout>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

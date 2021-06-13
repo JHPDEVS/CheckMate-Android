@@ -63,7 +63,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
             mCom = view.findViewById(R.id.com);
             mWriter = view.findViewById(R.id.writer);
             mDate = view.findViewById(R.id.date);
-            mContainer = view.findViewById(R.id.product_container);
+            mContainer = view.findViewById(R.id.board_container);
         }
     }
 

@@ -36,7 +36,7 @@ import com.eatx.wdj.geofencing.MapsActivity;
 import com.eatx.wdj.ui.login.MainActivity;
 import com.eatx.wdj.ui.main.Board;
 import com.eatx.wdj.ui.main.Check;
-import com.eatx.wdj.ui.main.CheckActivity;
+import com.eatx.wdj.ui.main.CheckState;
 import com.eatx.wdj.ui.main.MainFragment;
 import com.eatx.wdj.ui.main.TimeTable;
 import com.eatx.wdj.ui.main.UserInfoRequest;
@@ -81,7 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == codeViewType.ViewType.LEFT_CONTENT) {
-            mView = LayoutInflater.from(mContext).inflate(R.layout.row_main_fragment, parent, false);
+            mView = LayoutInflater.from(mContext).inflate(R.layout.row_board, parent, false);
             return new MainViewHolder(mView);
         } else if (viewType == codeViewType.ViewType.SHORT_BOARD) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_board, parent, false);
@@ -104,26 +104,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             MainViewHolder holder2 = (MainViewHolder) holder;
             mainModel mInfo = getItemData(position);
 
-            holder2.mTitle.setText(mInfo.mTitle);
-            holder2.mText.setText(mInfo.mText);
-            holder2.mSimpleTitle.setText(mInfo.mSimpleTitle);
-            holder2.mSimpleText.setText(mInfo.mSimpleText);
+
 
 
             //버튼등에도 동일하게 지정할 수 있음 holder.버튼이름.setOnClickListener..형식으로
-            holder2.mTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // TODO
-                    if (position == 0) {
-                        Intent intent = new Intent(view.getContext(), MainActivity.class);
-                        view.getContext().startActivity(intent);
-                    } else if (position == 1) {
-                        Intent intent = new Intent(view.getContext(), CheckActivity.class);
-                        view.getContext().startActivity(intent);
-                    }
-                }
-            });
+
         } else if (holder instanceof CheckView) {
             CheckView checkView = (CheckView) holder;
             mainModel mainModel = getItemData(position);
@@ -145,7 +130,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     v.getContext().startActivity(intent);
                 }
             });
-
+            checkView.checkState.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("클릭됨");
+                    Intent intent = new Intent(mContext, CheckState.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
 
         } else if (holder instanceof BoardView) {
             BoardView boardView = (BoardView) holder;
@@ -325,18 +317,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class MainViewHolder extends RecyclerView.ViewHolder {
         //        public final View mView;
-        public final LinearLayout mSimpleLayout;
-        public final TextView mTitle, mText, mSimpleTitle, mSimpleText ;
 
         public MainViewHolder(View mView) {
             super(mView);
 //            this.mView = mView;
 
-            mTitle = (TextView) mView.findViewById(R.id.mTitle);
-            mText = (TextView) mView.findViewById(R.id.mText);
-            mSimpleLayout = (LinearLayout) mView.findViewById(R.id.mSimpleLayout);
-            mSimpleTitle = (TextView) mView.findViewById(R.id.mSimpleTitle);
-            mSimpleText = (TextView) mView.findViewById(R.id.mSimpleText);
 
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -365,7 +350,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class CheckView extends RecyclerView.ViewHolder {
         //        public final View mView;
         public final TextView checkText;
-        public final RelativeLayout goCheck;
+        public final RelativeLayout goCheck, checkState;
         public CheckView(View mView) {
             super(mView);
 //            this.mView = mView;
@@ -373,6 +358,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //     mID = (TextView) mView.findViewById(R.id.mID);
             checkText = (TextView) mView.findViewById(R.id.checkText);
             goCheck = (RelativeLayout) mView.findViewById(R.id.goCheck);
+            checkState = (RelativeLayout) mView.findViewById(R.id.checkState);
         }
     }
     public class TimeTableV extends RecyclerView.ViewHolder {

@@ -6,6 +6,7 @@
     <dimen name="margin_32dp">32dp</dimen>
     <dimen name="margin_28dp">28dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.

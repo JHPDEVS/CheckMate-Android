@@ -36,7 +36,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eatx.wdj.R;
 import com.eatx.wdj.data.BoardAdapter;
-import com.eatx.wdj.data.ItemAdapter;
 import com.eatx.wdj.data.MainAdapter;
 import com.eatx.wdj.data.Util;
 import com.eatx.wdj.data.model.BoardModel;
@@ -63,11 +62,6 @@ import java.util.Date;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SecondFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Board extends Fragment {
 
     private RecyclerView recyclerView;
@@ -85,6 +79,7 @@ public class Board extends Fragment {
     private ProgressDialog pDialog;
     private FloatingActionButton fab;
     private String id , type , name ,bno;
+    private ImageView searchButton;
     String[] items = {"공지","자유"};
     @Nullable
     @Override
@@ -97,9 +92,18 @@ public class Board extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         posts = new ArrayList<>();
         mAdapter = new BoardAdapter(getActivity(),posts);
+        searchButton = inflatedview.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),BoardSearch.class);
+                startActivity(intent);
+            }
+        });
         id = getActivity().getIntent().getStringExtra("id");
         getWriter(); // 이름 불러오기
         getBoard();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

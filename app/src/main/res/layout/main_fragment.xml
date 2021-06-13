@@ -5,8 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/selectableItemBackground"
+    android:background="#FFFFFF"
     tools:context=".ui.main.MainFragment">
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_back"
@@ -22,10 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="6dp"
         android:text="체크메이트"
-        android:textColor="@color/main2_color"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/outline"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
@@ -33,38 +35,40 @@
         android:id="@+id/text_self_auth_need"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="박주형님 반갑습니다!"
+        android:fontFamily="@font/basic"
         android:textStyle="bold"
-        android:textColor="@color/yellow2"
+        android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/text_self_auth"
         app:layout_constraintTop_toBottomOf="@id/text_self_auth" />
-
-
     <ImageView
         android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:src="@drawable/ic_baseline_search_24"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="48dp"
+        android:src="@drawable/ic_baseline_searchblack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_self_auth_need" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/text_self_auth_need"
+        app:layout_constraintTop_toTopOf="@+id/text_self_auth" />
 
     <ImageView
         android:id="@+id/userInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/ic_baseline_assignment_ind_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/search"
-        app:layout_constraintTop_toTopOf="@+id/text_self_auth_need" />
+        app:layout_constraintTop_toTopOf="@+id/text_self_auth" />
 
     <View
         android:id="@+id/view4"
         style="@style/MainDivider"
-        app:layout_constraintStart_toStartOf="@id/userInfo"
-        app:layout_constraintTop_toBottomOf="@id/userInfo" />
+        app:layout_constraintStart_toStartOf="@id/text_self_auth_need"
+        app:layout_constraintTop_toBottomOf="@id/text_self_auth_need" />
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -85,6 +89,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#EAE9E9"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -44,6 +44,7 @@ public class BoardSearch extends AppCompatActivity {
         searchView = (SearchView) findViewById(R.id.searchView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
+        searchView.setQueryHint("작성자 , 제목 ,내용으로 검색할 수 있습니다");
         posts = new ArrayList<>();
         mAdapter = new BoardAdapter(this, posts);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

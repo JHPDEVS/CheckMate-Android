@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eatx.wdj.R;
+import com.eatx.wdj.ui.login.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.royrodriguez.transitionbutton.TransitionButton;
 
@@ -42,7 +43,7 @@ public class Check extends AppCompatActivity {
         checkstate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CheckActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
