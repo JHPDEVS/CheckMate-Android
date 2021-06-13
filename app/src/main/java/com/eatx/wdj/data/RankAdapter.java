@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.R;
-import com.eatx.wdj.data.model.TimeTableModel;
+import com.eatx.wdj.data.model.Rankers;
 import com.eatx.wdj.ui.login.MainActivity;
 import com.eatx.wdj.ui.main.Board;
 import com.eatx.wdj.ui.main.DetailedView;
@@ -38,29 +38,33 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyViewHolder> {
+public class RankAdapter extends RecyclerView.Adapter<RankAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<TimeTableModel> timetables = new ArrayList<>();
+    private List<Rankers> rankers = new ArrayList<>();
+    private String password;
+    private int bno , no;
 
-    public TimeTableAdapter (Context context,List<TimeTableModel> timetables){
+    public RankAdapter (Context context,List<Rankers> rankers){
         this.mContext = context;
-        this.timetables = timetables;
+        this.rankers = rankers;
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTitle,  mCom , mWriter;
+        private TextView id, name , sid, classR , totalRun, countLate;
         private LinearLayout mContainer;
 
         public MyViewHolder (View view){
             super(view);
 
-            mTitle = view.findViewById(R.id.mSubject);
-            mCom = view.findViewById(R.id.mCom);
-            mWriter = view.findViewById(R.id.mWriter);
-            mContainer = view.findViewById(R.id.timetable_container);
+            name = view.findViewById(R.id.nameR);
+            sid = view.findViewById(R.id.sidR);
+            classR = view.findViewById(R.id.classR);
+            totalRun = view.findViewById(R.id.totalRun);
+            countLate = view.findViewById(R.id.countLate);
+            mContainer = view.findViewById(R.id.rank_container);
         }
     }
 
@@ -69,7 +73,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.row_timetable_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.row_rank_item,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -77,24 +81,27 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        final TimeTableModel timetable = timetables.get(position);
-        holder.mCom.setText(timetable.getStartTime() + ":00 ~" + timetable.getEndTime()+":00");
-        holder.mTitle.setText( "["+timetable.getClassTitle()+"]");
-        holder.mWriter.setText(timetable.getProfessorName());
+        final Rankers rank = rankers.get(position);
 
+        holder.name.setText(rank.getName());
+        holder.sid.setText(String.valueOf(rank.getSid()));
+        holder.classR.setText(rank.getClassValue());
+        holder.totalRun.setText(String.valueOf(rank.getTotalrun()));
+        holder.countLate.setText(String.valueOf(rank.getCountlate()));
     }
+
     public void updateData(int position) {
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
 
     public void removeItem(int position) {
-        timetables.remove(position);
+        rankers.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
     @Override
     public int getItemCount() {
-        return timetables.size();
+        return rankers.size();
     }
 }

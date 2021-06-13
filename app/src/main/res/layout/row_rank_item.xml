@@ -8,7 +8,7 @@
     android:background="?attr/selectableItemBackground">
 
     <LinearLayout
-        android:id="@+id/timetable_container"
+        android:id="@+id/rank_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?selectableItemBackground"
@@ -27,24 +27,40 @@
 
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="공지"
-                android:id="@+id/mCom"/>
+                tools:text="이름"
+                android:layout_weight="1"
+                android:id="@+id/nameR"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                tools:text="제목"
-                android:layout_weight="3"
-                android:id="@+id/mSubject"/>s
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="박주형"
-                android:id="@+id/mWriter"/>
+                tools:text="학번"
+                android:layout_weight="1"
+                android:id="@+id/sidR"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="반"
+                android:layout_weight="1"
+                android:id="@+id/classR"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="바퀴 수"
+                android:layout_weight="1"
+                android:id="@+id/totalRun"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="지각 횟수"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/countLate"/>
+
+
         </LinearLayout>
 
     </LinearLayout>

@@ -18,7 +18,7 @@ import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
 import com.eatx.wdj.R;
-import com.eatx.wdj.ui.main.SecondFragment;
+import com.eatx.wdj.ui.main.Rank;
 import com.eatx.wdj.ui.main.TimeTable;
 
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, new SecondFragment()).commit();
+                                .replace(R.id.container, new Rank()).commit();
                     break;
                     case 3: ;
                         getSupportFragmentManager().beginTransaction()

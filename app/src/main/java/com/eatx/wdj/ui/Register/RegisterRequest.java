@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
-    final static private String URL = "https://eatx.shop/.well-known/Register.php";
+    final static private String URL = "https://ckmate.shop/.well-known/Register.php";
 
     private Map<String, String> map;
 
