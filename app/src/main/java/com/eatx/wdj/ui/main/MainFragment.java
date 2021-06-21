@@ -161,7 +161,8 @@ public class MainFragment extends Fragment {
         hello.setText(name+"님 반갑습니다!");
         menu.add(new mainModel(name,id,sid,classValue,2,true));
         menu.add(new mainModel("WDJ 시간표",3,true,true));
-        menu.add(new mainModel("게시판", 1));
+        menu.add(new mainModel("학사공지", 4,true));
+        menu.add(new mainModel("자유게시판", 1));
         adapter.notifyDataSetChanged();
     }
 

@@ -40,7 +40,13 @@
             android:name=".ui.main.BoardSearch"
             android:theme="@style/Theme.WDJ.NoActionBar" />
         <activity
+            android:name=".ui.main.noticeBoardSearch"
+            android:theme="@style/Theme.WDJ.NoActionBar" />
+        <activity
             android:name=".ui.main.CheckState"
+            android:theme="@style/Theme.WDJ.NoActionBar" />
+        <activity
+            android:name=".ui.main.AbsenceState"
             android:theme="@style/Theme.WDJ.NoActionBar" />
         <activity
             android:name=".geofencing.MapsActivity"
@@ -52,7 +58,6 @@
             android:exported="true" />
 
         <activity android:name=".ui.main.Check" />
-        <activity android:name=".ui.main.CheckActivity" />
         <activity
             android:name=".ui.main.PhoneAuth"
             android:label="@string/title_activity_phone_auth"

@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/margin_8dp"
     xmlns:tools="http://schemas.android.com/tools">a
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -103,6 +102,34 @@
                 android:layout_below="@+id/checkStateImage"
                 />
         </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/absenceState"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_below="@+id/checkText"
+        android:layout_toRightOf="@+id/goCheck">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/absenceStateImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/outline_developer_board_24"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/main2_color"/>
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="결석현황"
+            android:layout_below="@+id/absenceStateImage"
+            />
+    </RelativeLayout>
 </LinearLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

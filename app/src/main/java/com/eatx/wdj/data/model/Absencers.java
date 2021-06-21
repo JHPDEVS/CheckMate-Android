@@ -1,16 +1,16 @@
 package com.eatx.wdj.data.model;
 
-public class Checkers {
+public class Absencers {
 
-    private String name , classValue , timestamp , serverTime , serverDate ,date;
-    private int sid , run;
+    private String name , classValue , timestamp , serverTime , serverDate ,date , descValue;
+    private int sid ;
 
-    public int getRun() {
-        return run;
+    public String getDescValue() {
+        return descValue;
     }
 
-    public void setRun(int run) {
-        this.run = run;
+    public void setDescValue(String descValue) {
+        this.descValue = descValue;
     }
 
     public String getServerTime() {
@@ -37,7 +37,7 @@ public class Checkers {
         this.date = date;
     }
 
-    public Checkers() {
+    public Absencers() {
     }
 
     public String getName() {

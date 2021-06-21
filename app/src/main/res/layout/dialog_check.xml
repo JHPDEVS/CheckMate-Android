@@ -9,7 +9,7 @@
     android:paddingHorizontal="8dp"
     android:paddingBottom="40dp"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="100dp"
+    app:behavior_peekHeight="80dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
@@ -28,19 +28,30 @@
             android:id="@+id/container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingBottom="@dimen/activity_vertical_margin"
             tools:context=".ui.main.Check">
 
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:background="@drawable/round_background"
+                app:layout_constraintBottom_toTopOf="@+id/date2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageView>
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/date2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="현재닐짜"
+                android:layout_marginTop="25dp"
+                android:text="현재날짜"
                 android:textSize="9pt"
-                app:layout_constraintBottom_toTopOf="@+id/username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,10 +64,10 @@
                 android:layout_marginBottom="21dp"
                 android:background="@drawable/round_background"
                 android:text="HH : MM : SS"
-                app:layout_constraintBottom_toTopOf="@+id/username"
+                app:layout_constraintBottom_toTopOf="@+id/username2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date" />
+                app:layout_constraintTop_toBottomOf="@+id/date2" />
 
             <View
                 android:id="@+id/view2"
@@ -68,13 +79,13 @@
                 android:background="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date"
+                app:layout_constraintTop_toBottomOf="@+id/date2"
                 app:layout_constraintVertical_bias="0.0" />
 
 
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/username2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

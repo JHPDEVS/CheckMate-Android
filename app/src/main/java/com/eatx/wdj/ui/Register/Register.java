@@ -160,6 +160,7 @@ public class Register extends AppCompatActivity {
                     if(success) {
                         Toast.makeText(getApplicationContext(),"회원가입에 성공했습니다",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Register.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra("id",id);
                         intent.putExtra("password",password);
                         startActivity(intent);
@@ -183,100 +184,4 @@ public class Register extends AppCompatActivity {
     private boolean isName() {
         return dupi;
     }
-
-//    class DupiNameTask extends AsyncTask<Boolean,Boolean,Boolean> {
-//
-//        @Override
-//        protected Boolean doInBackground(Boolean... booleans) {
-//            PreparedStatement st;
-//            ResultSet rs;
-//            String id = et_id.getText().toString();
-//            String query = "SELECT * FROM `students` WHERE `id` = ?";
-//            try {
-//                Class.forName("org.mariadb.jdbc.Driver");
-//                Connection connection = DriverManager.getConnection("jdbc:mariadb://eatx.shop:3307/student_db","wdj","wdj123");
-//                st = connection.prepareStatement(query);
-//                st.setString(1,id);
-//                rs = st.executeQuery();
-//
-//                if(rs.next()) {
-//                    Handler mHandler = new Handler(Looper.getMainLooper());
-//                    mHandler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            // 사용하고자 하는 코드
-//
-//                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"중복된 닉네임입니다",Snackbar.LENGTH_SHORT);
-//                            snackbar.setAnchorView(findViewById(R.id.goRegister));
-//                            snackbar.show();
-//                        }
-//                    }, 0);
-//                    return dupi = true;
-//                } else {
-//                    return dupi = false;
-//                }
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//                System.out.println("로그인 실패");
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            return dupi;
-//        }
-//    }
-//    class Task extends AsyncTask<Void,Void,Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            PreparedStatement st;
-//            String id = et_id.getText().toString();
-//            String password = et_password.getText().toString();
-//            String nickname = et_name.getText().toString();
-//            String sid = et_sid.getText().toString();
-//            String email = et_email.getText().toString();
-//            String phone = et_phone.getText().toString();
-//
-//            String query = "INSERT INTO `students`(`id`, `password`, `sid`, `name`,`phoneNumber`,`email`) VALUES (?,?,?,?,?,?)";
-//            try {
-//                new DupiNameTask().execute();
-//                if(!isName()) {
-//                    Class.forName("org.mariadb.jdbc.Driver");
-//                    Connection connection = DriverManager.getConnection("jdbc:mariadb://eatx.shop:3307/student_db", "wdj", "wdj123");
-//                    st = connection.prepareStatement(query);
-//                    st.setString(1, id);
-//                    st.setString(2, password);
-//                    st.setString(3, sid);
-//                    st.setString(4, nickname);
-//                    st.setString(5, phone);
-//                    st.setString(6, email);
-//                    if (st.executeUpdate() != 0) {
-//                        Handler mHandler = new Handler(Looper.getMainLooper());
-//                        mHandler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                // 사용하고자 하는 코드
-//                                Toast.makeText(Register.this,"회원가입 완료" ,Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(Register.this, MainActivity.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                intent.putExtra("id",id);
-//                                startActivity(intent);
-//                            }
-//                        }, 0);
-//                    } else {
-//                        System.out.println("오류 발생");
-//                    }
-//                } else {
-//
-//                }
-//
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//            return null;
-//
-//        }
-//
-//    }
 }

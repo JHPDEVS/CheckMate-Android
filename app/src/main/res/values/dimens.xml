@@ -7,6 +7,7 @@
     <dimen name="margin_28dp">28dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.
@@ -30,6 +31,7 @@
     <dimen name="text_normal_size">17sp</dimen>
     <dimen name="title_size">24sp</dimen>
     <dimen name="list_title_size">17sp</dimen>
+    <dimen name="dialog_margin">25dp</dimen>
     <dimen name="tertiary_text_size">13sp</dimen>
     <!--
     This padding applies to both square and round screens. The total padding between the buttons

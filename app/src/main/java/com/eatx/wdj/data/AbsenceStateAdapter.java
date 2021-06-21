@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.eatx.wdj.data.model.Absencers;
 import com.eatx.wdj.data.model.Checkers;
 import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.R;
@@ -43,18 +44,18 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.MyViewHolder> implements Filterable{
+public class AbsenceStateAdapter extends RecyclerView.Adapter<AbsenceStateAdapter.MyViewHolder> implements Filterable{
 
     private Context mContext;
-    private List<Checkers> checkers = new ArrayList<>();
-    private List<Checkers> filteredList = new ArrayList<>();
+    private List<Absencers> absencers = new ArrayList<>();
+    private List<Absencers> filteredList = new ArrayList<>();
     private String password;
     private int bno , no;
 
-    public CheckStateAdapter (Context context,List<Checkers> checkers){
+    public AbsenceStateAdapter (Context context,List<Absencers> absencers){
         this.mContext = context;
-        this.checkers = checkers;
-        this.filteredList  = checkers;
+        this.absencers = absencers;
+        this.filteredList  = absencers;
     }
 
     @Override
@@ -64,15 +65,15 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
             protected FilterResults performFiltering(CharSequence constraint) {
                 String charString = constraint.toString();
                 if(charString.isEmpty()) {
-                    filteredList = checkers;
+                    filteredList = absencers;
                 } else {
-                    List<Checkers> filteringList = new ArrayList<Checkers>();
-                    for(Checkers item : checkers) {
+                    List<Absencers> filteringList = new ArrayList<Absencers>();
+                    for(Absencers item : absencers) {
                         if(item.getName().toLowerCase().contains(charString.toLowerCase())) {
                             filteringList.add(item);
                         }
                     }
-                     filteredList = filteringList;
+                    filteredList = filteringList;
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = filteredList;
@@ -81,7 +82,7 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (List<Checkers>)results.values;
+                filteredList = (List<Absencers>)results.values;
                 notifyDataSetChanged();
             }
         };
@@ -136,7 +137,7 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.row_check_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.row_absence_item,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -144,19 +145,19 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        final Checkers check = filteredList.get(position);
+        final Absencers absencers = filteredList.get(position);
 
-        holder.name.setText(check.getName());
-        holder.sid.setText(String.valueOf(check.getSid()));
-        holder.classR.setText(check.getClassValue());
-        holder.time.setText(check.getTimestamp());
+        holder.name.setText(absencers.getName());
+        holder.sid.setText(String.valueOf(absencers.getSid()));
+        holder.classR.setText(absencers.getClassValue());
+        holder.time.setText(absencers.getDescValue());
 
         holder.mContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 no = position;
 
-                showContent(check.getName(), check.getSid(),check.getClassValue() ,check.getDate() +"\n"+ check.getTimestamp(),"지각 패널티 : +" + check.getRun()+"바퀴" + "\n" , "서버에 요청된 시간 : " + check.getServerDate() + " " + check.getServerTime());
+                showContent(absencers.getName(), absencers.getSid(),absencers.getClassValue() ,absencers.getDate() +"\n"+ absencers.getTimestamp(),"결석 사유 : " + absencers.getDescValue() + "\n" , "서버에 요청된 시간 : " + absencers.getServerDate() + " " + absencers.getServerTime());
                 //mContext.startActivity(intent);
 
             }
@@ -169,7 +170,7 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
     }
 
     public void removeItem(int position) {
-        checkers.remove(position);
+        absencers.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
     }
@@ -179,8 +180,8 @@ public class CheckStateAdapter extends RecyclerView.Adapter<CheckStateAdapter.My
         return filteredList.size();
     }
 
-    public void filterList(List<Checkers> filteredlist) {
-        checkers = filteredlist;
+    public void filterList(List<Absencers> filteredlist) {
+        absencers = filteredlist;
         notifyDataSetChanged();
     }
 }

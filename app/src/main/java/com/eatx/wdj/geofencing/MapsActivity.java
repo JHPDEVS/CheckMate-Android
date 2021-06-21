@@ -6,19 +6,26 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +33,9 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.eatx.wdj.ui.Register.Register;
-import com.eatx.wdj.ui.Register.RegisterRequest;
-import com.eatx.wdj.ui.login.MainActivity;
+import com.eatx.wdj.ui.main.AbsenceRequest;
 import com.eatx.wdj.ui.main.CheckRequest;
+import com.eatx.wdj.ui.main.delBoardRequest;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -49,7 +55,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,16 +75,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static MapsActivity ins;
     private final Handler handler = new Handler();
     private String GEOFENCE_ID = "GEOFENCE";
-    private int RADIUS = 50;
+    private int RADIUS = 60;
     private int run;
-    private TextView date , time , mMinute , fieldturn , username;
+    private TextView date , time , mMinute , fieldturn , username, date2 , username2 , time2;
     LinearLayout layoutbottomSheet;
     LinearLayout layoutbottomSheet2;
     private TimerTask updateTime;
     private String getCurrentTime , getCurrentMinute , getDate;
-    private Button attendbutton;
+    private Button attendbutton ,absencebutton;
     long now = System.currentTimeMillis();
-
+    Document doc ;
+    private Context mContext;
     public static MapsActivity getInstance() {
         return ins;
     }
@@ -99,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         registerReceiver(broadcastReceiver,new IntentFilter("enter"));
         updateTime();
         username = findViewById(R.id.nameValue);
+        username2 = findViewById(R.id.username2);
         Intent intent = getIntent();
         String id = intent.getStringExtra("ID");
         String name = intent.getStringExtra("NAME");
@@ -107,8 +118,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println(id + "id값");
         System.out.println(classValue + "id값");
         username.setText(name+"님 출석하세요!");
-
+        username2.setText(name+"님 출석할려면 지정된 위치에 접근하세요");
         attendbutton = findViewById(R.id.attend);
+
         attendbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             boolean success = jsonObject.getBoolean("success");
                             if(success) {
                                 Toast.makeText(getApplicationContext(),"출석에 성공했습니다",Toast.LENGTH_SHORT).show();
+                                attendbutton.setEnabled(false);
                             } else {
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"출석에 실패했습니다",Snackbar.LENGTH_SHORT);
                                 snackbar.setAnchorView(findViewById(R.id.bottomSheet2));
@@ -135,6 +148,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 CheckRequest checkRequest = new CheckRequest(id,name,sid,classValue, Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID),getDate,getCurrentTime,run,responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
                 queue.add(checkRequest);
+            }
+        });
+
+        absencebutton = findViewById(R.id.absencebutton);
+        absencebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText et = new EditText(MapsActivity.this);
+                FrameLayout container = new FrameLayout(MapsActivity.this);
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = MapsActivity.this.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = MapsActivity.this.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                et.setLayoutParams(params);
+                container.addView(et);
+                final AlertDialog.Builder alt_bld = new AlertDialog.Builder(MapsActivity.this);
+                alt_bld.setTitle("결석 사유 입력").setMessage("결석 사유를 입력하세요").setIcon(R.drawable.outline_developer_board_24).setCancelable(
+                        true).setView(container).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String value = et.getText().toString();
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            boolean success = jsonObject.getBoolean("success");
+                                            if(success) {
+                                                Toast.makeText(getApplicationContext(),"결석처리되었습니다 ",Toast.LENGTH_SHORT).show();
+                                                absencebutton.setEnabled(false);
+                                            } else {
+                                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"서버 통신실패",Snackbar.LENGTH_SHORT);
+                                                snackbar.setAnchorView(findViewById(R.id.bottomSheet2));
+                                                snackbar.show();
+                                                return;
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                // 서버로 Volley를 이용해서 요청함
+                                AbsenceRequest absenceRequest = new AbsenceRequest(intent.getStringExtra("ID"),name,sid,classValue, Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID),getDate,getCurrentTime,value,responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(MapsActivity.this);
+                                queue.add(absenceRequest);
+                              }
+
+                        });
+                AlertDialog alert = alt_bld.create();
+                alert.show();
             }
         });
     }
@@ -259,7 +321,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         addMarker(myHome,"집","ㅇㅇ");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yju, 18));
         addCircle(yju,RADIUS);
-        addCircle(yju2,RADIUS);
         addCircle(myHome,RADIUS);
         addGeofence(yju,RADIUS);
         addGeofence(myHome,RADIUS);
@@ -282,15 +343,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         circleOptions.strokeWidth(3);
         mMap.addCircle(circleOptions);
     }
+
     public void updateTime() {
         Log.d("UPDATE TIME","시간 업데이트됨");
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 M월 d일 EE요일");
         getDate = simpleDate.format(mDate);
-
+        date2 = findViewById(R.id.date2);
         date = findViewById(R.id.dateValue);
+        date2.setText(getDate);
         date.setText(getDate);
         time = findViewById(R.id.timeValue);
+        time2 = findViewById(R.id.time2);
         updateTime = new TimerTask() {
             @Override
             public void run() {
@@ -300,6 +364,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Timer timer = new Timer();
         timer.schedule(updateTime, 0, 1000);
     }
+
+
     protected void Update() {
         Runnable updater = new Runnable() {
             public void run() {
@@ -317,15 +383,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int minute = calendar.get(Calendar.MINUTE);
                 fieldturn = findViewById(R.id.fieldturn);
                 if(hour>0) {
+
                     run = hour * 12;
                     if (minute >= 5) {
-                        run = run + ((int) minute / 5);
+                        run = run +((int) minute / 5);
+                    }
+                }  else if(hour == 0) {
+                    run = 0;
+                    if (minute >= 5) {
+                        run = run +((int) minute / 5);
                     }
                 }
 //                System.out.println(run + "바퀴 돌면됨");
 //                System.out.println(hour+"시" + minute+"분입니다");
                 fieldturn.setText("지금 출석 시 " + run + "바퀴를 달리시면 됩니다!");
                 time.setText(getCurrentTime);
+                time2.setText(getCurrentTime);
             }
         };
         handler.post(updater);

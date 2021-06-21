@@ -1,18 +1,23 @@
 package com.eatx.wdj.data;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -124,43 +129,67 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
         dContent.setMovementMethod(new ScrollingMovementMethod());
         int boardNum = bno;
         String pw = password;
+
         dClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProgressDialog delete = new ProgressDialog(mContext);
-                delete.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                delete.setMessage("게시글 삭제하는중~");
-                delete.setCanceledOnTouchOutside(false);
-                delete.show();
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println(bno + "번호");
-                        System.out.println(password + "비번");
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            System.out.println(success);
-                            if(success) {
-                                System.out.println(bno  + "지워짐");
-                                delete.dismiss();
-                            } else {
-                                System.out.println("오류 ");
-                                return;
+                final EditText et = new EditText(mContext);
+                FrameLayout container = new FrameLayout(mContext);
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = mContext.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = mContext.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                et.setLayoutParams(params);
+                container.addView(et);
+                final AlertDialog.Builder alt_bld = new AlertDialog.Builder(mContext);
+                alt_bld.setTitle("게시물 삭제").setMessage("삭제할 게시물의 비밀번호를 입력하세요").setIcon(R.drawable.ic_baseline_event_busy_24).setCancelable(
+                        true).setView(container).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String value = et.getText().toString();
+                                if(value.equals(password)) {
+                                    ProgressDialog delete = new ProgressDialog(mContext);
+                                    delete.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                    delete.setMessage("게시글 삭제하는중~");
+                                    delete.setCanceledOnTouchOutside(false);
+                                    delete.show();
+                                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            System.out.println(bno + "번호");
+                                            System.out.println(password + "비번");
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(response);
+                                                boolean success = jsonObject.getBoolean("success");
+                                                System.out.println(success);
+                                                if(success) {
+                                                    System.out.println(bno  + "지워짐");
+                                                    delete.dismiss();
+                                                    bClose.callOnClick();
+                                                } else {
+                                                    System.out.println("오류 ");
+                                                    return;
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    };
+                                    System.out.println(boardNum);
+                                    System.out.println(pw);
+                                    delBoardRequest delBoardRequest = new delBoardRequest(boardNum,pw,responseListener);
+                                    RequestQueue queue = Volley.newRequestQueue(mContext);
+                                    queue.add(delBoardRequest);
+                                    removeItem(no);
+                                    System.out.println(no + "번째 데이터 삭제됨");
+                                } else {
+                                    Toast.makeText(mContext, "비밀번호가 틀립니다", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                System.out.println(boardNum);
-                System.out.println(pw);
-                delBoardRequest delBoardRequest = new delBoardRequest(boardNum,pw,responseListener);
-                RequestQueue queue = Volley.newRequestQueue(mContext);
-                queue.add(delBoardRequest);
-                removeItem(no);
-                System.out.println(no + "번째 데이터 삭제됨");
-                dialog.dismiss();
+
+                        });
+                AlertDialog alert = alt_bld.create();
+                alert.show();
             }
         });
         bClose.setOnClickListener(new View.OnClickListener() {

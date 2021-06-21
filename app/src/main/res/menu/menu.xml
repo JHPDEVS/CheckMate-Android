@@ -7,8 +7,8 @@
         android:icon="@drawable/ic_baseline_home_24"/>
     <item
         android:id="@+id/item1"
-        android:icon="@drawable/outline_done_outline_24"
-        android:title="출석" />
+        android:icon="@drawable/ic_baseline_report_24"
+        android:title="공지사항" />
 
     <item
         android:id="@+id/item2"

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eae9e9"
+    android:orientation="vertical"
+    tools:context=".ui.main.BoardSearch">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/margin_28dp"
+        android:fontFamily="@font/birobold"
+        android:padding="@dimen/padding_max"
+        android:text="2021-06-13"/>
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:queryHint="Search Here"
+        app:iconifiedByDefault="false"
+        android:padding="@dimen/margin_8dp"
+        app:queryBackground="@drawable/round_background"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16dp"
+        android:background="@color/white"
+        android:stretchColumns="1,2,3,4">
+        <TableRow>
+            <TextView
+                android:id="@+id/nameR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                />
+
+            <TextView
+                android:id="@+id/sidR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="학번"
+                />
+
+            <TextView
+                android:id="@+id/classR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="반"
+                />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:text="결석 사유"
+                />
+
+        </TableRow>
+    </TableLayout>
+
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/dateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            app:backgroundTint="@color/white"
+            android:layout_marginBottom="@dimen/margin_16dp"/>
+
+
+
+    </FrameLayout>
+</LinearLayout>

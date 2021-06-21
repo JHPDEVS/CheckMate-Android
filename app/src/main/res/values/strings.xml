@@ -42,6 +42,7 @@
     <string name="title_activity_check">CheckActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="title_activity_board_search">BoardSearch</string>
 
 
     <!--

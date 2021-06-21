@@ -71,6 +71,10 @@ public class mainModel {
         this.BoardTitle = BoardTitle;
         this.viewType = viewType;
     }
+    public mainModel(String BoardTitle, int viewType,boolean check) {
+        this.BoardTitle = BoardTitle;
+        this.viewType = viewType;
+    }
 
     public mainModel(String mTitle, String mText, String mSimpleTitle, String mSimpleText, int viewType) {
         this.mTitle = mTitle;

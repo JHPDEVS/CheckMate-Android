@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText, passwordEditText;
     private boolean isSuccessful = false;
     private userInfo user;
+    private TransitionButton loginButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
         usernameEditText = (EditText) findViewById(R.id.username);
         passwordEditText = (EditText) findViewById(R.id.password);
-        final TransitionButton loginButton = findViewById(R.id.login);
+        loginButton = findViewById(R.id.login);
         final MaterialButton RegisterButton = findViewById(R.id.goRegister);
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -130,43 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                loginButton.startAnimation();
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            System.out.println(success);
-                            if(success) {
-                                String id = jsonObject.getString("id");
-                                String password = jsonObject.getString("password");
-                                Toast.makeText(getApplicationContext(),"로그인에 성공했습니다",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("id",id);
-                                intent.putExtra("password",password);
-                                startActivity(intent);
-                            } else {
-                                loginButton.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"로그인에 실패했습니다",Snackbar.LENGTH_SHORT);
-                                snackbar.setAnchorView(findViewById(R.id.goRegister));
-                                snackbar.show();
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                LoginRequest loginRequest = new LoginRequest(id,password,responseListener);
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                queue.add(loginRequest);
-
-
-
+                login();
             }
         });
         RegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -183,11 +148,48 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        login();
     }
     private void showToast() {
+
+    }
+    private void login() {
+        String id = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        loginButton.startAnimation();
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    System.out.println(success);
+                    if(success) {
+                        String id = jsonObject.getString("id");
+                        String password = jsonObject.getString("password");
+                        Toast.makeText(getApplicationContext(),"로그인에 성공했습니다",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("id",id);
+                        intent.putExtra("password",password);
+                        startActivity(intent);
+                    } else {
+                        loginButton.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"로그인에 실패했습니다",Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(findViewById(R.id.goRegister));
+                        snackbar.show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        LoginRequest loginRequest = new LoginRequest(id,password,responseListener);
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        queue.add(loginRequest);
+
+
 
     }
     private void showLoginFailed(@StringRes Integer errorString) {

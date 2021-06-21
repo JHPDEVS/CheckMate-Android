@@ -280,29 +280,29 @@
                             android:layout_marginEnd="@dimen/margin_36dp"
                             android:background="#259E9797"
                             android:inputType="text"
+                            android:text="WDJ"
+                            android:enabled="false"
                             android:padding="8dp"
                             android:singleLine="true"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/text_self_auth"
                             app:layout_constraintTop_toBottomOf="@id/text_class" />
-                        <androidx.appcompat.widget.AppCompatTextView
+
+                        <com.royrodriguez.transitionbutton.TransitionButton
                             android:id="@+id/goRegister"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_32dp"
-                            android:layout_marginEnd="@dimen/margin_32dp"
+                            android:layout_marginStart="32dp"
                             android:layout_marginTop="10dp"
-                            android:background="@color/main_color"
-                            android:gravity="center"
-                            android:paddingTop="11dp"
-                            android:paddingBottom="12dp"
+                            android:layout_marginEnd="32dp"
                             android:text="회원가입"
-                            android:textColor="@color/main2_color"
-                            android:textSize="14sp"
+                            android:textColor="@android:color/white"
+                            app:defaultColor="#EDB60F"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/et_class"
-                            />
+                            app:loaderColor="@android:color/white" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

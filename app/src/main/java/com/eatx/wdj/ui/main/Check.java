@@ -115,4 +115,20 @@ public class Check extends AppCompatActivity {
         };
         handler.post(updater);
     }
+
+    private void doStuff() {
+        // Thread를 생성한다.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // runOnUiThread를 추가하고 그 안에 UI작업을 한다.
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        }).start();
+    }
 }

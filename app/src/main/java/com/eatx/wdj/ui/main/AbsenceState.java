@@ -25,8 +25,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eatx.wdj.R;
+import com.eatx.wdj.data.AbsenceStateAdapter;
 import com.eatx.wdj.data.BoardAdapter;
 import com.eatx.wdj.data.CheckStateAdapter;
+import com.eatx.wdj.data.model.Absencers;
 import com.eatx.wdj.data.model.Checkers;
 import com.eatx.wdj.data.model.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,26 +47,26 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CheckState extends AppCompatActivity  {
+public class AbsenceState extends AppCompatActivity  {
     RecyclerView recyclerView;
     SearchView searchView;
     long now = System.currentTimeMillis();
-    private List<Checkers> checkers;
-    private CheckStateAdapter mAdapter;
+    private List<Absencers> absencers;
+    private AbsenceStateAdapter mAdapter;
     private TextView date;
     private int mDate,mMonth,mYear , mDayNum;
     private FloatingActionButton dateButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_state);
+        setContentView(R.layout.activity_absence_state);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setQueryHint("이름으로 검색할 수 있습니다");
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        checkers = new ArrayList<>();
-        mAdapter = new CheckStateAdapter(this, checkers);
+        absencers = new ArrayList<>();
+        mAdapter = new AbsenceStateAdapter(this, absencers);
         updateTime();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -97,35 +99,35 @@ public class CheckState extends AppCompatActivity  {
     }
 
     private void dateDialog() {
-            // DatePickerDialog
-            final Calendar Cal = Calendar.getInstance();
-            mDate = Cal.get(Calendar.DATE);
-            mMonth = Cal.get(Calendar.MONTH);
-            mYear = Cal.get(Calendar.YEAR);
-            mDayNum = Cal.get(Calendar.DAY_OF_WEEK);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(CheckState.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int day) {
-                    String dayof = "";
-                    if (month >= 0){
-                        month = month+1;
-                    }
-                    SimpleDateFormat simpleDate = new SimpleDateFormat("EE");
-                    Date date2 = new Date(year, month-1, day-1);
-                    String dayOfWeek = simpleDate.format(date2);
-                    date.setText(year+"년 " +month+"월 "+day+"일 "+dayOfWeek+"요일" );
-                    searchView.clearFocus();
-                    getBoard();
-
+        // DatePickerDialog
+        final Calendar Cal = Calendar.getInstance();
+        mDate = Cal.get(Calendar.DATE);
+        mMonth = Cal.get(Calendar.MONTH);
+        mYear = Cal.get(Calendar.YEAR);
+        mDayNum = Cal.get(Calendar.DAY_OF_WEEK);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AbsenceState.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                String dayof = "";
+                if (month >= 0){
+                    month = month+1;
                 }
-            },mYear,mMonth,mDate);
-            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-1000);
-            datePickerDialog.show();
+                SimpleDateFormat simpleDate = new SimpleDateFormat("EE");
+                Date date2 = new Date(year, month-1, day-1);
+                String dayOfWeek = simpleDate.format(date2);
+                date.setText(year+"년 " +month+"월 "+day+"일 "+dayOfWeek+"요일" );
+                searchView.clearFocus();
+                getBoard();
+
+            }
+        },mYear,mMonth,mDate);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-1000);
+        datePickerDialog.show();
     }
     private void filter(String text) {
-        List<Checkers> filteredlist = new ArrayList<Checkers>();
+        List<Absencers> filteredlist = new ArrayList<Absencers>();
 
-        for(Checkers item : checkers) {
+        for(Absencers item : absencers) {
             if( item.getName().contains(text.toLowerCase())) {
                 filteredlist.add(item);
             }
@@ -144,7 +146,7 @@ public class CheckState extends AppCompatActivity  {
         getBoard();
     }
     private void getBoard() {
-        checkers.clear();
+        absencers.clear();
         mAdapter.getFilter().filter("");
         System.out.println(date.toString());
         ProgressDialog load = new ProgressDialog(this);
@@ -177,17 +179,18 @@ public class CheckState extends AppCompatActivity  {
                         String date = object.getString("date");
                         String serverTime = object.getString("serverTime");
                         String serverDay = object.getString("serverDay");
-                        int run = object.getInt("run");
-                        Checkers check = new Checkers();
-                        check.setName(name);
-                        check.setSid(sid);
-                        check.setClassValue(classValue);
-                        check.setTimestamp(time);
-                        check.setDate(date);
-                        check.setServerDate(serverDay);
-                        check.setServerTime(serverTime);
-                        check.setRun(run);
-                        checkers.add(check);
+                        String descValue = object.getString("descValue");
+
+                        Absencers absencer = new Absencers();
+                        absencer.setName(name);
+                        absencer.setSid(sid);
+                        absencer.setClassValue(classValue);
+                        absencer.setTimestamp(time);
+                        absencer.setDate(date);
+                        absencer.setServerDate(serverDay);
+                        absencer.setServerTime(serverTime);
+                        absencer.setDescValue(descValue);
+                        absencers.add(absencer);
                         mAdapter.notifyDataSetChanged();
                         count++;
                     }
@@ -198,9 +201,9 @@ public class CheckState extends AppCompatActivity  {
                 }
             }
         };
-        CheckStateRequest checkStateRequest = new CheckStateRequest(date.getText().toString(), responseListener);
-        RequestQueue queue = Volley.newRequestQueue(CheckState.this);
-        queue.add(checkStateRequest);
+        AbsenceStateRequest absenceRequest = new AbsenceStateRequest(date.getText().toString(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(AbsenceState.this);
+        queue.add(absenceRequest);
     }
 
 }

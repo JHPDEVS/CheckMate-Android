@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.eatx.wdj.ui.main.Board;
-import com.eatx.wdj.ui.main.Check;
-import com.eatx.wdj.ui.main.CheckFragment;
+
 import com.eatx.wdj.ui.main.MainFragment;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
@@ -19,6 +18,7 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 import com.eatx.wdj.R;
 import com.eatx.wdj.ui.main.Rank;
 import com.eatx.wdj.ui.main.TimeTable;
+import com.eatx.wdj.ui.main.noticeBoard;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                     case 1:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, new CheckFragment()).commit();
+                                .replace(R.id.container, new noticeBoard()).commit();
                         break;
                     case 2:
                         getSupportFragmentManager().beginTransaction()

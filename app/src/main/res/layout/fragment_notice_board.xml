@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground"
+    tools:context=".ui.main.MainFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/outline_done_outline_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/board_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:text="학사공지"
+        android:textStyle="bold"
+        android:fontFamily="@font/outline"
+        android:textColor="@color/board_theme"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/board_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="컴퓨터정보계열 학사공지입니다"
+        android:fontFamily="@font/basic"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/board_title"
+        app:layout_constraintTop_toBottomOf="@id/board_title" />
+
+
+
+
+    <ImageView
+        android:id="@+id/searchButton"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/board_desc"
+        app:layout_constraintTop_toTopOf="@+id/board_title" />
+
+
+    <View style="@style/MainDivider"
+        android:id="@+id/divider"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@id/board_desc"
+        app:layout_constraintTop_toBottomOf="@id/board_desc" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/boardrecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="76dp"
+        android:background="#EAE9E9"
+        android:clipToPadding="false"
+        android:overScrollMode="ifContentScrolls"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

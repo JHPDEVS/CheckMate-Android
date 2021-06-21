@@ -32,21 +32,29 @@ import com.eatx.wdj.*;
 import com.eatx.wdj.data.model.Post;
 import com.eatx.wdj.data.model.TimeTableModel;
 import com.eatx.wdj.data.model.mainModel;
+import com.eatx.wdj.data.model.noticeBoardModel;
 import com.eatx.wdj.geofencing.MapsActivity;
 import com.eatx.wdj.ui.login.MainActivity;
+import com.eatx.wdj.ui.main.AbsenceState;
 import com.eatx.wdj.ui.main.Board;
 import com.eatx.wdj.ui.main.Check;
 import com.eatx.wdj.ui.main.CheckState;
 import com.eatx.wdj.ui.main.MainFragment;
 import com.eatx.wdj.ui.main.TimeTable;
 import com.eatx.wdj.ui.main.UserInfoRequest;
+import com.eatx.wdj.ui.main.noticeBoard;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,13 +67,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //    private int mBackground;
     private ArrayList<mainModel> mValues = new ArrayList<>();
     View mView;
-    private RecyclerView recyclerView, timetableRecylcerView;
+    private RecyclerView recyclerView, timetableRecylcerView , noticeRecyclerView;
     private Context mContext;
     private List<Post> posts;
+    private List<noticeBoardModel> noticeposts;
     private List<TimeTableModel> timetables;
-    private RecyclerView.Adapter mAdapter, tableAdapter;
+    private RecyclerView.Adapter mAdapter, tableAdapter , noticeAdapter;
     private MainActivity activity;
-    final static private String Boardurl = "https://ckmate.shop/.well-known/Board.php";
+    private ProgressDialog write;
+    final static private String Boardurl = "https://ckmate.shop/.well-known/ShortBoard.php";
     final static private String TimeTableUrl = "https://ckmate.shop/.well-known/TodayTimeTable.php";
 
     public MainAdapter(Context mContext, ArrayList<mainModel> dataList, MainActivity activity) {
@@ -92,6 +102,9 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (viewType == codeViewType.ViewType.TIME_TABLE) {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_timetable, parent, false);
             return new TimeTableV(mView);
+        } else if (viewType == codeViewType.ViewType.NOTICE_BOARD) {
+            mView = LayoutInflater.from(mContext).inflate(R.layout.row_board, parent, false);
+            return new NoticeBoardView(mView);
         } else {
             mView = LayoutInflater.from(mContext).inflate(R.layout.row_check, parent, false);
             return new CheckView(mView);
@@ -139,6 +152,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
+            checkView.absenceState.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, AbsenceState.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
         } else if (holder instanceof BoardView) {
             BoardView boardView = (BoardView) holder;
             mainModel mainModel = getItemData(position);
@@ -161,7 +182,29 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .commit();
                 }
             });
-        } else if (holder instanceof TimeTableV) {
+        } else if (holder instanceof NoticeBoardView) {
+            NoticeBoardView boardView = (NoticeBoardView) holder;
+            mainModel mainModel = getItemData(position);
+
+            boardView.mBoardTitle.setText(mainModel.getBoardTitle());
+            noticeRecyclerView = mView.findViewById(R.id.shortboard);
+            noticeRecyclerView.addItemDecoration(new DividerItemDecoration(mView.getContext(), 1));
+            RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(mContext);
+            noticeRecyclerView.setLayoutManager(mLayoutManager2);
+            noticeposts = new ArrayList<>();
+            noticeAdapter = new shortNoticeBoardAdapter(mContext, noticeposts);
+            Update();
+
+            boardView.moreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) MainActivity.mContext).setBoardTab(1);
+                    ((MainActivity) mContext).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, new noticeBoard())
+                            .commit();
+                }
+            });
+        }else if (holder instanceof TimeTableV) {
             TimeTableV timeTableV = (TimeTableV) holder;
             mainModel mainModel = getItemData(position);
 
@@ -173,8 +216,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             timeTableV.classText.setText("오늘의 시간표");
             timeTableV.date.setText(" (" + time1 + " " + dayLongName + ")");
             timetableRecylcerView = mView.findViewById(R.id.timetablerecycle);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-            timetableRecylcerView.setLayoutManager(mLayoutManager);
+            RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+            timetableRecylcerView.setLayoutManager(mLayoutManager3);
             timetables = new ArrayList<>();
             tableAdapter = new TimeTableAdapter(mContext, timetables);
             getTimeTable();
@@ -190,7 +233,67 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
     }
+    protected void Update() {
+        new Thread() {
+            public void run() {
+                try {
+                    ((MainActivity)mContext).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            write = new ProgressDialog(mContext);
+                            write.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            write.setMessage("로딩중");
+                            write.setCanceledOnTouchOutside(false);
+                            write.show();
+                        }
+                    });
+                    int count =0;
+                    noticeposts.clear();
+                    Document doc = Jsoup.connect("https://computer.yju.ac.kr/board_XwRR82").get();
+                    Elements contents = doc.select("tbody").select("tr.notice");
+                    Elements contents2 = doc.select("tbody").select("tr");
+                    List<String> imageUrls = new ArrayList<>();
 
+                    for(Element content : contents2) {
+                        imageUrls.add(content.select("td.no").text());
+                        imageUrls.add(content.select("td.title").select("a").attr("abs:href"));
+                        imageUrls.add(content.select("td.title").select("a").text()); // 제목
+                        imageUrls.add(content.select("td.author").select("a").text()); // 작성자
+                        imageUrls.add(content.select("td.time").text()); // 작성날짜
+
+                        noticeBoardModel noticepost = new noticeBoardModel();
+                        noticepost.setTitle(content.select("td.title").select("a").text());
+                        noticepost.setHref(content.select("td.title").select("a").attr("abs:href"));
+                        noticepost.setDate(content.select("td.time").text());
+                        noticepost.setAuthor(content.select("td.author").select("a").text());
+                        noticepost.setNum(content.select("td.no").text());
+                        if(noticepost.getTitle() != "") {
+                            if(count<1) {
+                                noticeposts.add(noticepost);
+                            }
+                            if(count>2) {
+                                if(count<6) {
+                                    noticeposts.add(noticepost);
+                                }
+                            }
+                                count++;
+                        }
+                        ((MainActivity)mContext).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                noticeAdapter.notifyDataSetChanged();
+                                noticeRecyclerView.setAdapter(noticeAdapter);
+                                write.dismiss();
+                            }
+                        });
+                    }
+                    System.out.println(imageUrls);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
     private void getBoard (){
         posts.clear();
         System.out.println("다이얼로그");
@@ -334,6 +437,19 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
         }
     }
+    public class NoticeBoardView extends RecyclerView.ViewHolder {
+        //        public final View mView;
+        public final TextView mBoardTitle;
+        public final TextView moreButton;
+        public NoticeBoardView(View mView) {
+            super(mView);
+//            this.mView = mView;
+
+            //     mID = (TextView) mView.findViewById(R.id.mID);
+            mBoardTitle = (TextView) mView.findViewById(R.id.boardSubject);
+            moreButton = (TextView) mView.findViewById(R.id.goToBoard);
+        }
+    }
     public class BoardView extends RecyclerView.ViewHolder {
         //        public final View mView;
         public final TextView mBoardTitle;
@@ -350,7 +466,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class CheckView extends RecyclerView.ViewHolder {
         //        public final View mView;
         public final TextView checkText;
-        public final RelativeLayout goCheck, checkState;
+        public final RelativeLayout goCheck, checkState ,absenceState ;
         public CheckView(View mView) {
             super(mView);
 //            this.mView = mView;
@@ -359,6 +475,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             checkText = (TextView) mView.findViewById(R.id.checkText);
             goCheck = (RelativeLayout) mView.findViewById(R.id.goCheck);
             checkState = (RelativeLayout) mView.findViewById(R.id.checkState);
+            absenceState =(RelativeLayout) mView.findViewById(R.id.absenceState);
         }
     }
     public class TimeTableV extends RecyclerView.ViewHolder {

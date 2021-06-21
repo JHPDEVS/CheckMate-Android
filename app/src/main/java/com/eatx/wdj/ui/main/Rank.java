@@ -42,8 +42,8 @@ public class Rank extends Fragment {
     private List<Rankers> rankers;
     RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
-    public static CheckFragment newInstance() {
-        return new CheckFragment();
+    public static Rank newInstance() {
+        return new Rank();
     }
     View inflatedview = null;
     @Nullable
